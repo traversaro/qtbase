@@ -97,6 +97,7 @@
         "icu": {
             "label": "ICU",
             "test": {
+                "head": "#define U_SHOW_CPLUSPLUS_API 0",
                 "main": [
                     "UErrorCode status = U_ZERO_ERROR;",
                     "UCollator *collator = ucol_open(\"ru_RU\", &status);",
