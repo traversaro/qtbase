@@ -31,6 +31,7 @@
 #endif
 
 #include <memory>
+#include <iostream>
 
 QT_BEGIN_NAMESPACE
 
@@ -299,9 +300,15 @@ static QString prefixFromAppDirHelper()
         && (QT_CONFIG(dlopen) || defined(Q_OS_WIN))
 static QString prefixFromQtCoreLibraryHelper(const QString &qtCoreLibraryPath)
 {
+    std::cerr << "===============> prefixFromQtCoreLibraryHelper called with argument qtCoreLibraryPath" << qtCoreLibraryPath.toStdString() << std::endl;
     const QString qtCoreLibrary = QDir::fromNativeSeparators(qtCoreLibraryPath);
+    std::cerr << "===============>  qtCoreLibrary" << qtCoreLibrary.toStdString() << std::endl;
     const QString libDir = QFileInfo(qtCoreLibrary).absolutePath();
+    std::cerr << "===============> libDir " << libDir.toStdString() << std::endl;
+    std::cerr << "===============> QT_CONFIGURE_LIBLOCATION_TO_PREFIX_PATH " << QT_CONFIGURE_LIBLOCATION_TO_PREFIX_PATH << std::endl;
     const QString prefixDir = libDir + "/" QT_CONFIGURE_LIBLOCATION_TO_PREFIX_PATH;
+    std::cerr << "===============> prefixDir " << prefixDir.toStdString() << std::endl;
+    std::cerr << "===============> QDir::cleanPath(prefixDir) " << QDir::cleanPath(prefixDir).toStdString() << std::endl;
     return QDir::cleanPath(prefixDir);
 }
 #endif
