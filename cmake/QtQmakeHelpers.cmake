@@ -46,7 +46,15 @@ function(qt_generate_qconfig_cpp in_file out_file)
     endif()
     file(RELATIVE_PATH from_lib_location_to_prefix
          "${lib_location_absolute_path}" "${QT_BUILD_INTERNALS_RELOCATABLE_INSTALL_PREFIX}")
-    set(QT_CONFIGURE_LIBLOCATION_TO_PREFIX_PATH "${from_lib_location_to_prefix}")
+    if(WIN32)
+      # In conda-forge, the .dll are manually copied from <install_prefix>/lib/qt6/bin to
+      # <install_prefix>/bin after the CMake install, and the one actually loaded by the loader
+      # are the one in <install_prefix>/bin, so we hardcode the QT_CONFIGURE_LIBLOCATION_TO_PREFIX_PATH
+      # to be .., to avoid issues like https://github.com/conda-forge/qt-main-feedstock/issues/275
+      set(QT_CONFIGURE_LIBLOCATION_TO_PREFIX_PATH "..")
+    else()
+      set(QT_CONFIGURE_LIBLOCATION_TO_PREFIX_PATH "${from_lib_location_to_prefix}")
+    endif()
 
     # Ensure Windows drive letter is prepended to the install prefix hardcoded
     # into qconfig.cpp, otherwise qmake can't find Qt modules in a static Qt
