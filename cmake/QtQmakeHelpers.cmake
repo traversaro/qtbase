@@ -47,6 +47,7 @@ function(qt_generate_qconfig_cpp in_file out_file)
     file(RELATIVE_PATH from_lib_location_to_prefix
          "${lib_location_absolute_path}" "${QT_BUILD_INTERNALS_RELOCATABLE_INSTALL_PREFIX}")
     set(QT_CONFIGURE_LIBLOCATION_TO_PREFIX_PATH "${from_lib_location_to_prefix}")
+    message(STATUS "==========================> QT_CONFIGURE_LIBLOCATION_TO_PREFIX_PATH : ${QT_CONFIGURE_LIBLOCATION_TO_PREFIX_PATH}")
 
     # Ensure Windows drive letter is prepended to the install prefix hardcoded
     # into qconfig.cpp, otherwise qmake can't find Qt modules in a static Qt
